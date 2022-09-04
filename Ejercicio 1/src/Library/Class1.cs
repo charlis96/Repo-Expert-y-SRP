@@ -20,16 +20,18 @@ namespace SRP
 
     }
 
+    //Creo una clase nueva para la ubicación del libro porque se podría agregar una nueva categoría como por ejemplo
+    //en qué biblioteca se encuentra o si está la versión física o virtual.
     public class BookLocation
     {
 
-        public string LibrarySector { get ; set; }
-        public string LibraryShelve { get ; set; }
+        public string LibrarySector { get; set; }
+        public string LibraryShelf { get; set; }
 
-        public BookLocation(string sector, string shelve)
+        public BookLocation(string sector, string shelf)
         {
             this.LibrarySector = sector;
-            this.LibraryShelve = shelve;
+            this.LibraryShelf = shelf;
         }
 
     }

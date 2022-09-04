@@ -5,48 +5,82 @@ namespace Library
 {
     public class AppointmentService
     {
-        public static string CreateAppointment(string name, string id, string phoneNumber, DateTime date, string appoinmentPlace, string doctorName)
+        public static StringBuilder stringBuilder { get; } = new StringBuilder("Scheduling appointment...\n");
+        public static string CreateAppointment(Person person, string id, DateTime date, AppointmentLocation appointmentPlace, Doctor doctorName)
         {
-            StringBuilder stringBuilder = new StringBuilder("Scheduling appointment...\n");
-            Boolean isValid = true;
+            bool IsValid = true;
 
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(person.Name))
             {
-                stringBuilder.Append("Unable to schedule appointment, 'name' is required\n");
-                isValid = false;
+                AppointmentService.stringBuilder.Append("Unable to schedule appointment, 'name' is required\n");
+                IsValid = false;
+            }
+
+            if (string.IsNullOrEmpty(person.PhoneNumber))
+            {
+                AppointmentService.stringBuilder.Append("Unable to schedule appointment, 'phone number' is required\n");
+                IsValid = false;
             }
 
             if (string.IsNullOrEmpty(id))
             {
-                stringBuilder.Append("Unable to schedule appointment, 'id' is required\n");
-                isValid = false;
+                AppointmentService.stringBuilder.Append("Unable to schedule appointment, 'id' is required\n");
+                IsValid = false;
             }
 
-            if (string.IsNullOrEmpty(phoneNumber))
+            if (string.IsNullOrEmpty(appointmentPlace.AppointmentPlace))
             {
-                stringBuilder.Append("Unable to schedule appointment, 'phone number' is required\n");
-                isValid = false;
+                AppointmentService.stringBuilder.Append("Unable to schedule appointment, 'appoinment place' is required\n");
+                IsValid = false;
             }
 
-            if (string.IsNullOrEmpty(appoinmentPlace))
+            if (string.IsNullOrEmpty(doctorName.DoctorName))
             {
-                stringBuilder.Append("Unable to schedule appointment, 'appoinment place' is required\n");
-                isValid = false;
+                AppointmentService.stringBuilder.Append("Unable to schedule appointment, 'doctor name' is required\n");
+                IsValid = false;
             }
 
-            if (string.IsNullOrEmpty(doctorName))
+            if (IsValid)
             {
-                stringBuilder.Append("Unable to schedule appointment, 'doctor name' is required\n");
-                isValid = false;
-            }
-
-            if (isValid)
-            {
-                stringBuilder.Append("Appoinment scheduled");
+                AppointmentService.stringBuilder.Append("Appoinment scheduled");
             }
 
             return stringBuilder.ToString();
         }
+    }
 
+    //Creo una clase para el paciente ya que se pueden agregar más datos en el futuro como edad, sexo, etc.
+    public class Person
+    {
+        public string Name { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public Person(string name, string phoneNumber)
+        {
+            this.Name = name;
+            this.PhoneNumber = phoneNumber;
+        }
+    }
+
+    //Creo una clase para la ubicación porque si se decide agregar más datos como por ejemplo sucursal, piso, sala, etc.
+    public class AppointmentLocation
+    {
+        public string AppointmentPlace { get; set; }
+
+        public AppointmentLocation(string appointmentPlace)
+        {
+            this.AppointmentPlace = appointmentPlace;
+        }
+    }
+
+    //Creo una clase para el doctor porque se pueden agregar datos en el futuro como la especialidad.
+    public class Doctor
+    {
+        public string DoctorName { get; set; }
+
+        public Doctor(string doctorName)
+        {
+            this.DoctorName = doctorName;
+        }
     }
 }
