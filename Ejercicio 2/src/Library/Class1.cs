@@ -3,12 +3,20 @@ using System.Text;
 
 namespace Library
 {
+    /*
+    El código original no respeta el principio SRP pues la clase AppointmentService se encarga de manejar todos
+    los datos del paciente, la ubicación y del doctor, así como también de imprimir un aviso que diga si se pudo
+    crear la cita exitosamente. Todas estas son razones de cambio, y como por el principio SRP una clase debe
+    tener sólo una razón de cambio, se separan en clases distintas.
+    */
     public class AppointmentService
     {
-        public static StringBuilder stringBuilder { get; } = new StringBuilder("Scheduling appointment...\n");
+        public static StringBuilder stringBuilder { get; } = new StringBuilder();
         public static string CreateAppointment(Person person, string id, DateTime date, AppointmentLocation appointmentPlace, Doctor doctorName)
         {
             bool IsValid = true;
+            AppointmentService.stringBuilder.Clear();
+            AppointmentService.stringBuilder.Append("Scheduling appointment...\n");
 
             if (string.IsNullOrEmpty(person.Name))
             {
@@ -42,7 +50,7 @@ namespace Library
 
             if (IsValid)
             {
-                AppointmentService.stringBuilder.Append("Appoinment scheduled");
+                AppointmentService.stringBuilder.Append("Appoinment scheduled\n");
             }
 
             return stringBuilder.ToString();
